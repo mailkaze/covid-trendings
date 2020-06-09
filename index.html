@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Covid Trendings</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="search">
+        <input
+          type="text"
+          id="country-search"
+          placeholder="Search your country ..."
+        />
+      </div>
+      <div class="global card">
+          <h3>Datos Globales:</h3>
+        <p>Nuevos casos mundiales: <span id="globalNewConfirmed"></span></p>
+        <p>Tendencia de casos por millón: <span id="globalCasesPerMillion" className="trending"></span></p>
+        <!-- <p>Promedio mundial de casos por millón: <span id="globalMeanPerMillion" className="trending"></span></p> -->
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
