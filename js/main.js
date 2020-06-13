@@ -41,7 +41,7 @@ const buildCountryList = (match) => {
 }
 
 const searchCountry = country => {
-    fetch('http://restcountries.eu/rest/v2/all')
+    fetch('https://restcountries.eu/rest/v2/all')
         .then(res => {
             return res.json()
         })
@@ -90,8 +90,8 @@ countrySearch.addEventListener('keyup', e => {
     }
 })
 
-const loadCountryData = obj => {
-    alert(obj)
+const loadCountryData = countryCode => {
+    alert(countryCode)
 }
 
 document.addEventListener("DOMContentLoaded", globalFetch())
