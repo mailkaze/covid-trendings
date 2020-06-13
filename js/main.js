@@ -1,5 +1,6 @@
 const countrySearch = document.getElementById('country-search')
 const cardsContainer = document.getElementsByClassName('cards-container')[0]
+let globalCasesPerMillion = 0
 
 const globalFetch = () => {
     const globalPopulation = 7794798729
@@ -9,12 +10,11 @@ const globalFetch = () => {
         })
         .then(data => {
             const globalNewConfirmed = data.Global.NewConfirmed
-            const globalCasesPerMillion = (globalNewConfirmed / globalPopulation *1000000).toFixed(2)
+            globalCasesPerMillion = (globalNewConfirmed / globalPopulation *1000000).toFixed(2)
             const globalTotal = data.Global.TotalConfirmed
             document.getElementById('globalNewConfirmed').textContent = Intl.NumberFormat().format(globalNewConfirmed)
-            document.getElementById('globalCasesPerMillion').textContent = globalCasesPerMillion
             document.getElementById('globalTotal').textContent = Intl.NumberFormat().format(globalTotal)
-            // TODO: Comparar con los días anteriores
+            document.getElementById('globalCasesPerMillion').textContent = globalCasesPerMillion
         })
 }
 
@@ -102,8 +102,18 @@ const renderCountryData = countryData => {
         <div class="text" >
             <h3>${countryData.name}</h3>
             <p>Nuevos casos hoy: <span>${countryData.casesToday}</span></p>
-            <p>Tendencia de casos por millón: <i class="fas fa-caret-up ${countryData.showArrowUp}"></i><i class="fas fa-caret-down ${countryData.showArrowDown}"></i><span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span></p>
-            <p>Tendencia mundial de casos por millón: <i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i><span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span></p>
+            <p>Tendencia de casos por millón: 
+                <i class="fas fa-caret-up ${countryData.showArrowUp}"></i>
+                <i class="fas fa-caret-down ${countryData.showArrowDown}"></i>
+                <span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span>
+                <i class="far fa-question-circle"></i>
+            </p>
+            <p>Casos mundiales por millón: 
+                <i class="fas fa-caret-up"></i>
+                <i class="fas fa-caret-down"></i>
+                <span class=${countryData.trending}>${globalCasesPerMillion}</span>
+                <i class="far fa-question-circle"></i></i>
+            </p>
         </div>
     `
     cardsContainer.appendChild(countryDataCard)
