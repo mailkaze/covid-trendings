@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Covid Trendings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
@@ -20,11 +21,14 @@
           <h3>Datos Globales:</h3>
           <p>Nuevos casos mundiales: <span id="globalNewConfirmed"></span></p>
           <p>Casos Totales: <span id="globalTotal"></span></p>
-          <p>Tendencia de casos por millón: <span id="globalCasesPerMillion" className="trending"></span></p>
+          <p>Tendencia de casos por millón: <i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i><span id="globalCasesPerMillion" className="trending"></span></p>
         </div>
       </div>
     </div>
-
+    <footer>
+      <span>by mailkaze <a href="https://github.com/mailkaze" target="_blank"><i class="fab fa-github"></i></a></span>
+    </footer>
+    <script src="https://kit.fontawesome.com/a20e852377.js" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

@@ -9,7 +9,7 @@ const globalFetch = () => {
         })
         .then(data => {
             const globalNewConfirmed = data.Global.NewConfirmed
-            const globalCasesPerMillion = Math.round(globalNewConfirmed / globalPopulation *1000000)
+            const globalCasesPerMillion = (globalNewConfirmed / globalPopulation *1000000).toFixed(2)
             const globalTotal = data.Global.TotalConfirmed
             document.getElementById('globalNewConfirmed').textContent = Intl.NumberFormat().format(globalNewConfirmed)
             document.getElementById('globalCasesPerMillion').textContent = globalCasesPerMillion
@@ -101,9 +101,9 @@ const renderCountryData = countryData => {
         <img src=${countryData.flag} />
         <div class="text" >
             <h3>${countryData.name}</h3>
-            <p>Nuevos Casos: <span>${countryData.casesToday}</span></p>
-            <p>Tendencia de casos por millón: <span class=${countryData.trending}>${countryData.newCasesPerMillion}</span></p>
-            <p>Tendencia mundial de casos por millón: <span class=${countryData.trending}>${countryData.newCasesPerMillion}</span></p>
+            <p>Nuevos casos hoy: <span>${countryData.casesToday}</span></p>
+            <p>Tendencia de casos por millón: <i class="fas fa-caret-up ${countryData.showArrowUp}"></i><i class="fas fa-caret-down ${countryData.showArrowDown}"></i><span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span></p>
+            <p>Tendencia mundial de casos por millón: <i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i><span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span></p>
         </div>
     `
     cardsContainer.appendChild(countryDataCard)
@@ -123,18 +123,20 @@ const loadCountryData = (slug, population, flag, name) => {
                 meanCasesLastWeek += data[data.length - i].Cases - data[data.length - (i+1)].Cases
             }
             meanCasesLastWeek = meanCasesLastWeek / 7
-            let trending = ''
-            trending = casesToday >= meanCasesLastWeek ? 'up' : 'down'
-            newCasesPerMillion = casesToday / (population/1000000)
+            const newCasesPerMillion = casesToday / (population/1000000)
+
+            const trending = casesToday >= meanCasesLastWeek ? 'up' : 'down'
+            const showArrowUp = trending === 'up' ? 'show' : 'hidden' 
+            const showArrowDown = trending === 'up' ? 'hidden' : 'show' 
 
             countryData = {
                 flag: flag,
                 name: name,
-                population: population,
                 casesToday: casesToday,
-                meanCasesLastWeek: meanCasesLastWeek,
                 trending: trending,
-                newCasesPerMillion: newCasesPerMillion
+                newCasesPerMillion: newCasesPerMillion,
+                showArrowUp: showArrowUp,
+                showArrowDown: showArrowDown
             }
             renderCountryData(countryData)
         })
