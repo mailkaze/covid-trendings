@@ -3,7 +3,6 @@ const cardsContainer = document.getElementsByClassName('cards-container')[0]
 
 const globalFetch = () => {
     const globalPopulation = 7794798729
-    // const numberOfCountries = 186
     fetch('https://api.covid19api.com/summary')
         .then( res => {
             return res.json()
@@ -20,19 +19,21 @@ const globalFetch = () => {
 }
 
 const buildCountryList = (match) => {
-    fetch('https://api.covid19api.com/summary')
+    fetch('https://api.covid19api.com/countries')
         .then(res => {
             return res.json()
         })
-        .then(covidSummary => {
-            const list = covidSummary.Countries
-            for (i of list) {
+        .then(covidCountries => {
+            for (i of covidCountries) {
                 for (j of match) {
-                    if (i.CountryCode === j.alpha2Code) {
+                    // TODO: ver por qué veo paises que no tienen datos del covid
+                    if (i.ISO2 === j.alpha2Code) {
                         renderCountry({
                             flag: j.flag, 
                             name: i.Country,
-                            key: i.CountryCode
+                            population: j.population,
+                            key: i.ISO2,
+                            slug: i.Slug
                         })
                     }
                 }
@@ -68,15 +69,17 @@ const searchCountry = country => {
         })
 }
 
-const renderCountry = covidCountryList => {
+const renderCountry = covidCountry => {
     const countryCard = document.createElement('div')
     countryCard.classList.add('country-select','card')
-    countryCard.id = covidCountryList.key
-    countryCard.setAttribute('onclick', 'loadCountryData(this.id)')
-    // countryCard.onclick = loadCountryData(covidCountryList.key)
+    countryCard.setAttribute('name', covidCountry.name)
+    countryCard.setAttribute('flag', covidCountry.flag)
+    countryCard.setAttribute('population', covidCountry.population)
+    countryCard.id = covidCountry.slug
+    countryCard.setAttribute('onclick', 'loadCountryData(this.id, this.getAttribute("population"), this.getAttribute("flag"), this.getAttribute("name"))')
     countryCard.innerHTML = `
-        <img src=${covidCountryList.flag} />
-        <h3>${covidCountryList.name}</h3>
+        <img src=${covidCountry.flag} />
+        <h3>${covidCountry.name}</h3>
     `
     cardsContainer.appendChild(countryCard)
 }
@@ -90,8 +93,51 @@ countrySearch.addEventListener('keyup', e => {
     }
 })
 
-const loadCountryData = countryCode => {
-    alert(countryCode)
+const renderCountryData = countryData => {
+    console.log(countryData)
+    countryDataCard = document.createElement('div')
+    countryDataCard.classList.add('country-data', 'card')
+    countryDataCard.innerHTML = `
+        <img src=${countryData.flag} />
+        <div class="text" >
+            <h3>${countryData.name}</h3>
+            <p>Nuevos Casos: <span>${countryData.casesToday}</span></p>
+            <p>Tendencia de casos por millón: <span class=${countryData.trending}>${countryData.newCasesPerMillion}</span></p>
+            <p>Tendencia mundial de casos por millón: <span class=${countryData.trending}>${countryData.newCasesPerMillion}</span></p>
+        </div>
+    `
+    cardsContainer.appendChild(countryDataCard)
+}
+
+const loadCountryData = (slug, population, flag, name) => {
+    cardsContainer.innerHTML = ''
+
+    fetch(`https://api.covid19api.com/total/country/${slug}/status/confirmed`)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            const casesToday = data[data.length - 1].Cases - data[data.length - 2].Cases
+            let meanCasesLastWeek = 0
+            for (i = 2; i <= 8; i++){
+                meanCasesLastWeek += data[data.length - i].Cases - data[data.length - (i+1)].Cases
+            }
+            meanCasesLastWeek = meanCasesLastWeek / 7
+            let trending = ''
+            trending = casesToday >= meanCasesLastWeek ? 'up' : 'down'
+            newCasesPerMillion = casesToday / (population/1000000)
+
+            countryData = {
+                flag: flag,
+                name: name,
+                population: population,
+                casesToday: casesToday,
+                meanCasesLastWeek: meanCasesLastWeek,
+                trending: trending,
+                newCasesPerMillion: newCasesPerMillion
+            }
+            renderCountryData(countryData)
+        })
 }
 
 document.addEventListener("DOMContentLoaded", globalFetch())

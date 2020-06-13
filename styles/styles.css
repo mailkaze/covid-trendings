@@ -6,6 +6,7 @@ body {
 
 .container {
     width: 90%;
+    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,10 +15,13 @@ body {
 #country-search {
     border-style: none;
     padding: 4px 10px;
+    font-size: 1.2em;
+    border-radius: 5px;
 }
 
 .cards-container {
     width: 100%;
+    margin-top: 8px;
 }
 
 .card {
