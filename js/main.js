@@ -14,7 +14,7 @@ const globalFetch = () => {
             const globalTotal = data.Global.TotalConfirmed
             document.getElementById('globalNewConfirmed').textContent = Intl.NumberFormat().format(globalNewConfirmed)
             document.getElementById('globalTotal').textContent = Intl.NumberFormat().format(globalTotal)
-            document.getElementById('globalCasesPerMillion').textContent = globalCasesPerMillion
+            document.getElementById('globalCasesPerMillion').textContent = Intl.NumberFormat().format(globalCasesPerMillion)
         })
 }
 
@@ -62,8 +62,6 @@ const searchCountry = country => {
                     } 
                 }
             }
-            console.log(match)
-            // const covidCountryList = buildCountryList(match)
 
             buildCountryData(match)
         })
@@ -94,7 +92,6 @@ countrySearch.addEventListener('keyup', e => {
 })
 
 const renderCountryData = countryData => {
-    console.log(countryData)
     countryDataCard = document.createElement('div')
     countryDataCard.classList.add('country-data', 'card')
     countryDataCard.innerHTML = `
@@ -104,23 +101,23 @@ const renderCountryData = countryData => {
             <h3>${countryData.name}</h3>
             <p>Nuevos contagios: <span>${Intl.NumberFormat().format(countryData.casesToday)}</span></p>
             <p>Casos totales: <span>${Intl.NumberFormat().format(countryData.totalCases)}</span></p>
-            <p>población: <span>${Intl.NumberFormat().format(countryData.population)}</span></p>
+            <p>Población: <span>${Intl.NumberFormat().format(countryData.population)}</span></p>
             </div>
         </div>
         <div class="text" >
-            <p>Tendencia de casos por millón:</p>
+            <p>Contagios por millón de habitantes (hoy):</p>
             <p class="more-margin-p">
                 <i class="fas fa-caret-up ${countryData.showArrowUp}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown}"></i>
-                <span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span>
-                <i class="far fa-question-circle"></i>
+                <span class=${countryData.trending}>${Intl.NumberFormat().format(countryData.newCasesPerMillion.toFixed(2))}</span>
+                <i class="far fa-question-circle" onclick="toggleInfo()"></i>
             </p>
-            <p>Casos mundiales por millón:</p>
+            <p>Contagios mundiales por millón de habitantes (hoy):</p>
             <p> 
                 <i class="fas fa-caret-up ${countryData.showArrowUp2}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown2}"></i>
-                <span class=${countryData.comparison}>${globalCasesPerMillion}</span>
-                <i class="far fa-question-circle"></i></i>
+                <span class=${countryData.comparison}>${Intl.NumberFormat().format(globalCasesPerMillion)}</span>
+                <i class="far fa-question-circle" onclick="toggleInfo()"></i></i>
             </p>
         </div>
     `
@@ -167,6 +164,13 @@ const loadCountryData = (slug, population, flag, name) => {
             }
             renderCountryData(countryData)
         })
+}
+
+const toggleInfo = () => {
+    const info =  document.getElementsByClassName('info')[0]
+    info.classList.contains('hidden')
+    ? info.classList.remove('hidden')
+    : info.classList.add('hidden')
 }
 
 document.addEventListener("DOMContentLoaded", globalFetch())

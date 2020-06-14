@@ -3,27 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Covid Trendings</title>
+    <title>Covid-19 Trendings</title>
+    <link rel="shortcut icon" href="img/virus-solid.svg" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
+    <header>
+      <i class="fas fa-virus"></i><span>COVID-19 Trendings</span>
+    </header>
+
     <div class="container">
       <div class="search">
         <input
           type="text"
           id="country-search"
-          placeholder="Search your country ..."
+          placeholder="Busca tu país ..."
         />
       </div>
       <div class="cards-container">
         <div class="global card">
           <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/World_Flag.svg" alt="">
           <div class="text">
-            <h3>Datos Globales:</h3>
-            <p>Nuevos contagios: <span id="globalNewConfirmed"></span></p>
+            <h3>Situación mundial:</h3>
+            <p>Nuevos contagios (hoy): <span id="globalNewConfirmed"></span></p>
             <p>Casos Totales: <span id="globalTotal"></span></p>
-            <p>Contagios por millón: <span id="globalCasesPerMillion"></span></p>
+            <p>Contagios por millón de habitantes: <span id="globalCasesPerMillion"></span></p>
           </div> 
         </div>
       </div>
@@ -31,6 +36,24 @@
     <footer>
       <span>by mailkaze <a href="https://github.com/mailkaze" target="_blank"><i class="fab fa-github"></i></a></span>
     </footer>
+
+    <div class="info hidden">
+      <i class="fas fa-times" onclick="toggleInfo()"></i>
+      <h3>¿Qué significan estos números?</h3>
+      <h4>Contagios por millón de habitantes (hoy)</h4>
+      <p>Se muestra en <span class="green">VERDE</span> si hoy se han contagiado menos personas que la media de
+         la semana anterior y puede indicar que la situación está mejorando, de lo contrario se mostrará en 
+         <span class="red">ROJO</span>.</p>
+      <p class="little-margin">Este índice pone en contexto el número de contagios diarios con la población del país. Proporciona 
+        una idea más ajustada de la gravedad de la epidemia. Una región con población muy grande puede mostrar 
+        cifras de contagios enormes sin que signifique que la situación sea proporcionalmente grave y viceversa.</p>
+      <h4>Contagios mundiales por millón de habitantes (hoy)</h4>
+      <p>Se mostrará en <span class="green">VERDE</span> cuando el índice de contagios por millón de habitantes del
+         país consultado es menor que el índice mundial, puede significar que éste país está enfrentando la 
+         epidemia de un modo más eficaz que la mayoria de los países. De lo contrario se mostrará en <span class="red">ROJO</span>.</p>
+      <button onclick="toggleInfo()">Cerrar</button>
+    </div>
+
     <script src="https://kit.fontawesome.com/a20e852377.js" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
   </body>

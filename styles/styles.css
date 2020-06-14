@@ -13,8 +13,24 @@ body {
     margin: 0;
 }
 
+header {
+    height: 40px;
+    background: #073b4c;
+    color: white;
+}
+
+header i {
+    color: #06d6a0;
+    margin: 8px 8px 0 10px;
+}
+
+header span {
+    font-size: .9em;
+}
+
 .container {
     width: 90%;
+    max-width: 400px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -121,6 +137,7 @@ body {
 
 .country-data .text p {
     margin: 0;
+    text-align: center;
 }
 
 .country-data .text .more-margin-p {
@@ -185,3 +202,64 @@ footer i {
     color: white;
     font-size: 1.2em;
 }
+
+.info {
+    z-index: 100;
+    min-height: 90vh;
+    max-width: 400px;
+    background: white;
+    border-radius: 12px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 2vh 3vw;
+    width: 86vw;
+    padding: 15px;
+    font-size: .7em;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, .2);
+}
+
+.info .fa-times {
+     float: right;
+     cursor: pointer;
+     font-size: 1.3em;
+}
+
+.info h3 {
+    font-size: 1.3em;
+}
+
+.info h4 {
+    margin-bottom: 3px;
+    font-size: 1.1em;
+}
+
+.info p {
+    margin: 0;
+    text-align: justify;
+}
+
+.info .little-margin {
+    margin-top: 8px;
+}
+
+.info .green {
+    color: #06d6a0;
+    font-weight: 700;
+}
+
+.info .red {
+    color: #ef476f;
+    font-weight: 700;
+}
+
+ .info button {
+     border-style: none;
+     float: right;
+     background: #073b4c;
+     color: white;
+     padding: 10px 24px;
+     border-radius: 8px;
+     font-size: .9em;
+     cursor: pointer;
+ }
