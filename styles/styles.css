@@ -7,7 +7,7 @@ body {
     background: #f3f3f3;
     font-family: 'Noto Sans HK', sans-serif;
     color: #073b4c;
-    font-size: 0.9em;
+    font-size: 1.4em;
     position: relative;
     min-height: 100%;
     margin: 0;
@@ -26,9 +26,9 @@ body {
     margin-top: 10px;
     border-style: none;
     padding: 4px 10px;
-    font-size: 1.2em;
-    border-radius: 8px;
-    height: 24px;
+    font-size: 1em;
+    border-radius: 12px;
+    height: 30px;
 }
 
 .cards-container {
@@ -70,7 +70,7 @@ body {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 70px;
     transition: .1s;
 }
 
@@ -94,6 +94,43 @@ body {
 
 
 
+.country-data .top {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.country-data img{
+    width: 33%;
+    height: 142px;
+    border-radius: 8px;
+}
+
+.country-data .top-text {
+    font-size: 0.8em;
+    width: 65%;
+}
+
+.country-data .text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.country-data .text p {
+    margin: 0;
+}
+
+.country-data .text .more-margin-p {
+    margin-bottom: 14px;
+}
+
+.country-data .text span {
+    font-size: 1.6em;
+}
+
 .fa-caret-up {
     color: #ef476f;
     font-size: 1.4em;
@@ -106,23 +143,27 @@ body {
 
 .fa-question-circle {
     vertical-align: text-top;
+    font-size: em;
+    cursor: pointer;
 }
 
 .country-data .up {
     color: #ef476f;
-    font-size: 1.4em;
+    /* font-size: 1.4em; */
     font-weight: 700;
 }
 
 .country-data .down {
     color: #06d6a0;
-    font-size: 1.4em;
+    /* font-size: 1.4em; */
     font-weight: 700;
 }
 
 .hidden {
     display: none !important;
 }
+
+
 
 footer {
     position: absolute;
@@ -137,7 +178,7 @@ footer {
 }
 
 footer span {
-    font-size: 0.95em;
+    font-size: 0.8em;
 }
 
 footer i {

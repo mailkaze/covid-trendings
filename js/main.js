@@ -18,7 +18,7 @@ const globalFetch = () => {
         })
 }
 
-const buildCountryList = (match) => {
+const buildCountryData = (match) => {
     fetch('https://api.covid19api.com/countries')
         .then(res => {
             return res.json()
@@ -63,9 +63,9 @@ const searchCountry = country => {
                 }
             }
             console.log(match)
-            const covidCountryList = buildCountryList(match)
+            // const covidCountryList = buildCountryList(match)
 
-            buildCountryList(covidCountryList)
+            buildCountryData(match)
         })
 }
 
@@ -98,17 +98,25 @@ const renderCountryData = countryData => {
     countryDataCard = document.createElement('div')
     countryDataCard.classList.add('country-data', 'card')
     countryDataCard.innerHTML = `
-        <img src=${countryData.flag} />
-        <div class="text" >
+        <div class="top">
+            <img src=${countryData.flag} />
+            <div class="top-text">
             <h3>${countryData.name}</h3>
-            <p>Nuevos casos hoy: <span>${Intl.NumberFormat().format(countryData.casesToday)}</span></p>
-            <p>Tendencia de casos por millón: 
+            <p>Nuevos contagios: <span>${Intl.NumberFormat().format(countryData.casesToday)}</span></p>
+            <p>Casos totales: <span>${Intl.NumberFormat().format(countryData.totalCases)}</span></p>
+            <p>población: <span>${Intl.NumberFormat().format(countryData.population)}</span></p>
+            </div>
+        </div>
+        <div class="text" >
+            <p>Tendencia de casos por millón:</p>
+            <p class="more-margin-p">
                 <i class="fas fa-caret-up ${countryData.showArrowUp}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown}"></i>
                 <span class=${countryData.trending}>${countryData.newCasesPerMillion.toFixed(2)}</span>
                 <i class="far fa-question-circle"></i>
             </p>
-            <p>Casos mundiales por millón: 
+            <p>Casos mundiales por millón:</p>
+            <p> 
                 <i class="fas fa-caret-up ${countryData.showArrowUp2}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown2}"></i>
                 <span class=${countryData.comparison}>${globalCasesPerMillion}</span>
@@ -126,6 +134,7 @@ const loadCountryData = (slug, population, flag, name) => {
             return res.json()
         })
         .then(data => {
+            const totalCases = data[data.length - 1].Cases
             const casesToday = data[data.length - 1].Cases - data[data.length - 2].Cases
             let meanCasesLastWeek = 0
             for (i = 2; i <= 8; i++){
@@ -146,6 +155,8 @@ const loadCountryData = (slug, population, flag, name) => {
                 flag: flag,
                 name: name,
                 casesToday: casesToday,
+                totalCases: totalCases,
+                population: population,
                 trending: trending,
                 comparison: comparison,
                 newCasesPerMillion: newCasesPerMillion,
