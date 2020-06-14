@@ -101,7 +101,7 @@ const renderCountryData = countryData => {
         <img src=${countryData.flag} />
         <div class="text" >
             <h3>${countryData.name}</h3>
-            <p>Nuevos casos hoy: <span>${countryData.casesToday}</span></p>
+            <p>Nuevos casos hoy: <span>${Intl.NumberFormat().format(countryData.casesToday)}</span></p>
             <p>Tendencia de casos por millón: 
                 <i class="fas fa-caret-up ${countryData.showArrowUp}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown}"></i>
@@ -109,9 +109,9 @@ const renderCountryData = countryData => {
                 <i class="far fa-question-circle"></i>
             </p>
             <p>Casos mundiales por millón: 
-                <i class="fas fa-caret-up"></i>
-                <i class="fas fa-caret-down"></i>
-                <span class=${countryData.trending}>${globalCasesPerMillion}</span>
+                <i class="fas fa-caret-up ${countryData.showArrowUp2}"></i>
+                <i class="fas fa-caret-down ${countryData.showArrowDown2}"></i>
+                <span class=${countryData.comparison}>${globalCasesPerMillion}</span>
                 <i class="far fa-question-circle"></i></i>
             </p>
         </div>
@@ -121,7 +121,6 @@ const renderCountryData = countryData => {
 
 const loadCountryData = (slug, population, flag, name) => {
     cardsContainer.innerHTML = ''
-
     fetch(`https://api.covid19api.com/total/country/${slug}/status/confirmed`)
         .then(res => {
             return res.json()
@@ -139,14 +138,21 @@ const loadCountryData = (slug, population, flag, name) => {
             const showArrowUp = trending === 'up' ? 'show' : 'hidden' 
             const showArrowDown = trending === 'up' ? 'hidden' : 'show' 
 
+            const comparison = newCasesPerMillion > globalCasesPerMillion ? 'up' : 'down'
+            const showArrowUp2 = comparison === 'up' ? 'show' : 'hidden' 
+            const showArrowDown2 = comparison === 'up' ? 'hidden' : 'show'
+
             countryData = {
                 flag: flag,
                 name: name,
                 casesToday: casesToday,
                 trending: trending,
+                comparison: comparison,
                 newCasesPerMillion: newCasesPerMillion,
                 showArrowUp: showArrowUp,
-                showArrowDown: showArrowDown
+                showArrowDown: showArrowDown,
+                showArrowUp2: showArrowUp2,
+                showArrowDown2: showArrowDown2
             }
             renderCountryData(countryData)
         })
