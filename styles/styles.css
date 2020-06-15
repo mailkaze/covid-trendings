@@ -7,7 +7,7 @@ body {
     background: #f3f3f3;
     font-family: 'Noto Sans HK', sans-serif;
     color: #073b4c;
-    font-size: 1.4em;
+    font-size: 1.2em;
     position: relative;
     min-height: 100%;
     margin: 0;
@@ -38,6 +38,10 @@ header span {
     min-height: 90vh;
 }
 
+.search {
+    position: relative;
+}
+
 #country-search {
     margin-top: 10px;
     border-style: none;
@@ -45,6 +49,12 @@ header span {
     font-size: 1em;
     border-radius: 12px;
     height: 30px;
+}
+
+.fa-search {
+    position: absolute;
+    top: 19px;
+    right: 9px;
 }
 
 .cards-container {
@@ -119,7 +129,7 @@ header span {
 
 .country-data img{
     width: 33%;
-    height: 142px;
+    height: 116px;
     border-radius: 8px;
 }
 

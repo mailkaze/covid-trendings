@@ -82,15 +82,6 @@ const renderCountry = covidCountry => {
     cardsContainer.appendChild(countryCard)
 }
 
-countrySearch.addEventListener('keyup', e => {
-    if (e.keyCode === 13) {
-        const country = e.target.value.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()).trim(); // cada palabra pasa a empezar por mayuscula
-        countrySearch.value = ''
-        cardsContainer.innerHTML = ""
-        searchCountry(country)
-    }
-})
-
 const renderCountryData = countryData => {
     countryDataCard = document.createElement('div')
     countryDataCard.classList.add('country-data', 'card')
@@ -125,6 +116,7 @@ const renderCountryData = countryData => {
 }
 
 const loadCountryData = (slug, population, flag, name) => {
+    countrySearch.value = ''
     cardsContainer.innerHTML = ''
     fetch(`https://api.covid19api.com/total/country/${slug}/status/confirmed`)
         .then(res => {
@@ -172,5 +164,28 @@ const toggleInfo = () => {
     ? info.classList.remove('hidden')
     : info.classList.add('hidden')
 }
+
+const executeSearch = (search) => {
+    const country = search.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()).trim(); // cada palabra pasa a empezar por mayuscula
+        cardsContainer.innerHTML = ""
+        searchCountry(country)
+}
+
+
+countrySearch.addEventListener('keyup', e => {
+    if (e.keyCode === 13) {
+        executeSearch(e.target.value)
+        countrySearch.value = ''
+    }
+})
+
+countrySearch.addEventListener('keyup', e => {
+    executeSearch(e.target.value)
+})
+
+document.getElementsByClassName('fa-search')[0].addEventListener('click', () => {
+    executeSearch(countrySearch.value)
+    countrySearch.value = ''
+})
 
 document.addEventListener("DOMContentLoaded", globalFetch())
