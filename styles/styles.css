@@ -4,7 +4,7 @@ html {
   }
 
 body {
-    background: #f3f3f3;
+    background: #cbf3f0;
     font-family: 'Noto Sans HK', sans-serif;
     color: #073b4c;
     font-size: 1.2em;
@@ -16,7 +16,11 @@ body {
 header {
     height: 40px;
     background: #073b4c;
-    color: white;
+}
+
+header a {
+    text-decoration: none;
+    color: #fdfffc;
 }
 
 header i {
@@ -43,17 +47,17 @@ header span {
 }
 
 #country-search {
-    margin-top: 10px;
+    margin-top: 12px;
     border-style: none;
     padding: 4px 10px;
     font-size: 1em;
-    border-radius: 12px;
+    border-radius: 14px;
     height: 30px;
 }
 
 .fa-search {
     position: absolute;
-    top: 19px;
+    top: 21px;
     right: 9px;
 }
 
@@ -63,12 +67,20 @@ header span {
 }
 
 .card {
-    background: white;
+    background: #fdfffc;
     margin: 8px 0;
     padding: 0;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, .2);
+}
+
+.card .fa-globe-africa {
+    /* display: inline-block; */
+    color: #118ab2;
+    font-size: 2em;
+    margin: 0 5px 5px 0;
+    vertical-align: top;
 }
 
 .card .text {
@@ -77,6 +89,7 @@ header span {
 
 .card h3 {
     margin: 0;
+    display: inline-block;
 }
 .card p {
     margin: 6px 0;
@@ -198,7 +211,7 @@ footer {
     width: 100%;
     height: 40px;
     background: #073b4c;
-    color: white;
+    color: #fdfffc;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -209,15 +222,15 @@ footer span {
 }
 
 footer i {
-    color: white;
+    color: #fdfffc;
     font-size: 1.2em;
 }
 
 .info {
     z-index: 100;
-    min-height: 90vh;
+    /* min-height: 90vh; */
     max-width: 400px;
-    background: white;
+    background: #fdfffc;
     border-radius: 12px;
     position: absolute;
     left: 0;
@@ -235,8 +248,14 @@ footer i {
      font-size: 1.3em;
 }
 
-.info h3 {
+.info i {
     font-size: 1.3em;
+    margin-right: 3px;
+}
+
+.info h3 {
+    margin-top: 26px;
+    font-size: 1.4em;
 }
 
 .info h4 {
@@ -264,10 +283,11 @@ footer i {
 }
 
  .info button {
+     margin-top: 20px;
      border-style: none;
      float: right;
      background: #073b4c;
-     color: white;
+     color: #fdfffc;
      padding: 10px 24px;
      border-radius: 8px;
      font-size: .9em;

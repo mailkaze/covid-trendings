@@ -10,7 +10,7 @@
   </head>
   <body>
     <header>
-      <i class="fas fa-virus"></i><span>COVID-19 Trendings</span>
+      <a href="index.html"><i class="fas fa-virus"></i><span>COVID-19 Trendings</span></a>
     </header>
 
     <div class="container">
@@ -24,9 +24,9 @@
       </div>
       <div class="cards-container">
         <div class="global card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/World_Flag.svg" alt="">
+          <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/World_Flag.svg" alt=""> -->
           <div class="text">
-            <h3>Situación mundial:</h3>
+            <i class="fas fa-globe-africa"></i><h3>Situación mundial:</h3>
             <p>Nuevos contagios (hoy): <span id="globalNewConfirmed"></span></p>
             <p>Casos Totales: <span id="globalTotal"></span></p>
             <p>Contagios por millón de habitantes: <span id="globalCasesPerMillion"></span></p>
@@ -40,13 +40,12 @@
 
     <div class="info hidden">
       <i class="fas fa-times" onclick="toggleInfo()"></i>
-      <h3>¿Qué significan estos números?</h3>
+      <h3><i class="fas fa-info-circle"></i>¿Qué significan estos números?</h3>
       <h4>Contagios por millón de habitantes (hoy)</h4>
-      <p>Se muestra en <span class="green">VERDE</span> si hoy se han contagiado menos personas que la media de
-         la semana anterior y puede indicar que la situación está mejorando, de lo contrario se mostrará en 
-         <span class="red">ROJO</span>.</p>
-      <p class="little-margin">Proporciona una idea más ajustada de la gravedad de la epidemia, en relación a la 
+      <p>Proporciona una idea más ajustada de la gravedad de la epidemia, sin importar la 
         cantidad de habitantes.</p>
+      <p class="little-margin">Se muestra en <span class="green">VERDE</span> si hoy se han contagiado menos personas que la media de
+         la semana anterior y puede indicar que la situación está mejorando, de lo contrario se mostrará en <span class="red">ROJO</span>.</p>
       <h4>Contagios mundiales por millón de habitantes (hoy)</h4>
       <p>Se mostrará en <span class="green">VERDE</span> cuando el índice de contagios por millón de habitantes del
          país consultado es menor que el índice mundial, puede significar que este país está enfrentando la 
