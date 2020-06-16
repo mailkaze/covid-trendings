@@ -179,7 +179,7 @@ countrySearch.addEventListener('keyup', e => {
     }
 })
 
-countrySearch.addEventListener('keyup', e => {
+countrySearch.addEventListener('input', e => {
     executeSearch(e.target.value)
 })
 
