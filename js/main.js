@@ -1,87 +1,85 @@
+let countries = []
+let global = { newConfirmed: 0, totalConfirmed: 0, casesPerMillion: 0, population: 7794798729 }
 const countrySearch = document.getElementById('country-search')
 const cardsContainer = document.getElementsByClassName('cards-container')[0]
-let globalCasesPerMillion = 0
 
-const globalFetch = () => {
-    const globalPopulation = 7794798729
-    fetch('https://api.covid19api.com/summary')
-        .then( res => {
-            return res.json()
-        })
-        .then(data => {
-            const globalNewConfirmed = data.Global.NewConfirmed
-            globalCasesPerMillion = (globalNewConfirmed / globalPopulation *1000000).toFixed(2)
-            const globalTotal = data.Global.TotalConfirmed
-            document.getElementById('globalNewConfirmed').textContent = Intl.NumberFormat().format(globalNewConfirmed)
-            document.getElementById('globalTotal').textContent = Intl.NumberFormat().format(globalTotal)
-            document.getElementById('globalCasesPerMillion').textContent = Intl.NumberFormat().format(globalCasesPerMillion)
-        })
+// llena los campos de la tarjeta 'global'
+const renderGlobal = () => {
+    global.casesPerMillion = (global.newConfirmed / global.population *1000000).toFixed(2)
+    document.getElementById('globalNewConfirmed').textContent = Intl.NumberFormat().format(global.newConfirmed)
+    document.getElementById('globalTotal').textContent = Intl.NumberFormat().format(global.totalConfirmed)
+    document.getElementById('globalCasesPerMillion').textContent = Intl.NumberFormat().format(global.casesPerMillion)
 }
 
-const buildCountryData = (match) => {
-    fetch('https://api.covid19api.com/countries')
-        .then(res => {
-            return res.json()
-        })
-        .then(covidCountries => {
-            for (i of covidCountries) {
-                for (j of match) {
-                    // TODO: ver por qué veo paises que no tienen datos del covid
-                    if (i.ISO2 === j.alpha2Code) {
-                        renderCountry({
-                            flag: j.flag, 
-                            name: i.Country,
-                            population: j.population,
-                            key: i.ISO2,
-                            slug: i.Slug
-                        })
-                    }
-                }
-            }
-        })
-}
-
-const searchCountry = country => {
+// Primera function en ejecutarse, construye la lista de paises para la búsqueda
+// y el objeto 'global'
+const loadCountries = () => {
     fetch('https://restcountries.eu/rest/v2/all')
         .then(res => {
             return res.json()
         })
         .then(allCountries => {
-            let match = []
+            fetch('https://api.covid19api.com/summary')
+                .then(res => {
+                    return res.json()
+                })
+                .then(covidSummary => {
+                    global.newConfirmed = covidSummary.Global.NewConfirmed
+                    global.totalConfirmed = covidSummary.Global.TotalConfirmed
+                    renderGlobal() // Ya tenemos info para cargar la tarjeta global
 
-            for (c of allCountries) { // recorremos todos los objetos de la lista de paises
-                if (c.name.includes(country)) {
-                    match.push(c)
-                } else {
-                    const translations = Object.values(c.translations)
-                   for (t of translations) {
-                        if (t && t.includes(country)) {
-                            match.push(c)
-                            break
+                    for (country of allCountries) { // recorremos todos los países
+                        for (covid of covidSummary.Countries){ // recorremos los países con datos del COVID
+                            if (country.alpha2Code === covid.CountryCode) {
+                                const names = [covid.Country]
+                                const translations = Object.values(country.translations)
+                                translations.map( t => names.push(t))
+                                const countryData = {
+                                    names: names,
+                                    flag: country.flag,
+                                    countryCode: country.alpha2Code,
+                                    population: country.population,
+                                    slug: covid.Slug
+                                }
+                                countries.push(countryData)
+                            }
                         }
-                    } 
-                }
-            }
-
-            buildCountryData(match)
+                    }
+                })
         })
 }
 
+// busca el término buscado en la lista de países
+const searchCountry = country => {
+    const match = countries.filter( c => {
+        for (name of c.names) {
+            if (name.includes(country)) return c
+        }
+    })
+    match.map( x => renderCountry(x))
+}
+
+// carga los países durante la búsqueda
 const renderCountry = covidCountry => {
     const countryCard = document.createElement('div')
     countryCard.classList.add('country-select','card')
-    countryCard.setAttribute('name', covidCountry.name)
+    countryCard.setAttribute('name', covidCountry.names[0])
     countryCard.setAttribute('flag', covidCountry.flag)
     countryCard.setAttribute('population', covidCountry.population)
     countryCard.id = covidCountry.slug
-    countryCard.setAttribute('onclick', 'loadCountryData(this.id, this.getAttribute("population"), this.getAttribute("flag"), this.getAttribute("name"))')
+    countryCard.setAttribute('onclick', `loadCountryData(
+                                            this.id, 
+                                            this.getAttribute("population"), 
+                                            this.getAttribute("flag"), 
+                                            this.getAttribute("name"))`)
     countryCard.innerHTML = `
         <img src=${covidCountry.flag} />
-        <h3>${covidCountry.name}</h3>
+        <h3>${covidCountry.names[0]}</h3>
     `
     cardsContainer.appendChild(countryCard)
 }
 
+// carga la tarjeta con los datos del país seleccionado
 const renderCountryData = countryData => {
     countryDataCard = document.createElement('div')
     countryDataCard.classList.add('country-data', 'card')
@@ -107,7 +105,7 @@ const renderCountryData = countryData => {
             <p> 
                 <i class="fas fa-caret-up ${countryData.showArrowUp2}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown2}"></i>
-                <span class=${countryData.comparison}>${Intl.NumberFormat().format(globalCasesPerMillion)}</span>
+                <span class=${countryData.comparison}>${Intl.NumberFormat().format(global.casesPerMillion)}</span>
                 <i class="far fa-question-circle" onclick="toggleInfo()"></i></i>
             </p>
         </div>
@@ -115,6 +113,7 @@ const renderCountryData = countryData => {
     cardsContainer.appendChild(countryDataCard)
 }
 
+// llamado al hacer click en el país de la lista de resultados de búsqueda
 const loadCountryData = (slug, population, flag, name) => {
     countrySearch.value = ''
     cardsContainer.innerHTML = ''
@@ -126,7 +125,7 @@ const loadCountryData = (slug, population, flag, name) => {
             const totalCases = data[data.length - 1].Cases
             const casesToday = data[data.length - 1].Cases - data[data.length - 2].Cases
             let meanCasesLastWeek = 0
-            for (i = 2; i <= 8; i++){
+            for (i = 2; i <= 8; i++){ // saca la media de los casos nuevos de los últimos 7 días
                 meanCasesLastWeek += data[data.length - i].Cases - data[data.length - (i+1)].Cases
             }
             meanCasesLastWeek = meanCasesLastWeek / 7
@@ -136,7 +135,7 @@ const loadCountryData = (slug, population, flag, name) => {
             const showArrowUp = trending === 'up' ? 'show' : 'hidden' 
             const showArrowDown = trending === 'up' ? 'hidden' : 'show' 
 
-            const comparison = newCasesPerMillion > globalCasesPerMillion ? 'up' : 'down'
+            const comparison = newCasesPerMillion > global.casesPerMillion ? 'up' : 'down'
             const showArrowUp2 = comparison === 'up' ? 'show' : 'hidden' 
             const showArrowDown2 = comparison === 'up' ? 'hidden' : 'show'
 
@@ -158,6 +157,8 @@ const loadCountryData = (slug, population, flag, name) => {
         })
 }
 
+
+// muestra u oculta la tarjeta de información
 const toggleInfo = () => {
     const info =  document.getElementsByClassName('info')[0]
     info.classList.contains('hidden')
@@ -165,27 +166,21 @@ const toggleInfo = () => {
     : info.classList.add('hidden')
 }
 
-const executeSearch = (search) => {
-    const country = search.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()).trim(); // cada palabra pasa a empezar por mayuscula
-        cardsContainer.innerHTML = ""
-        searchCountry(country)
-}
-
-
+// EVENTOS:
 countrySearch.addEventListener('keyup', e => {
-    if (e.keyCode === 13) {
-        executeSearch(e.target.value)
-        countrySearch.value = ''
-    }
-})
-
-countrySearch.addEventListener('input', e => {
-    executeSearch(e.target.value)
+    cardsContainer.innerHTML = ''
+    const country = e.target.value.toLowerCase().trim().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()); // cada palabra pasa a empezar por mayuscula
+    searchCountry(country)
+    if (e.keyCode === 13) countrySearch.value = ''
 })
 
 document.getElementsByClassName('fa-search')[0].addEventListener('click', () => {
-    executeSearch(countrySearch.value)
+    cardsContainer.innerHTML = ''
+    const country = e.target.value.toLowerCase().trim().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()); // cada palabra pasa a empezar por mayuscula
+    searchCountry(country)
     countrySearch.value = ''
 })
 
-document.addEventListener("DOMContentLoaded", globalFetch())
+document.addEventListener("DOMContentLoaded", () => {
+    loadCountries()
+})
