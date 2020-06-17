@@ -1,3 +1,13 @@
+const lang = {
+    es-ES: {
+
+    },
+    en-US: {
+        
+    }
+}
+
+
 let countries = []
 let global = { newConfirmed: 0, totalConfirmed: 0, casesPerMillion: 0, population: 7794798729 }
 const countrySearch = document.getElementById('country-search')
