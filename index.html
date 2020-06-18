@@ -64,13 +64,20 @@
       <button onclick="toggleInfo()" id="infoClose"></button>
     </div>
 
-    
+    <div class="sources">
+      <i class="fas fa-times" onclick="toggleSources()"></i>
+      <h3 id="sourcesTitle"></h3>
+      <p><a href="https://covid19api.com/" target="_blank">COVID19API</a></p>
+      <p><a href="https://restcountries.eu/" target="_blank">REST Countries</a></p>
+    </div>
+
     <footer>
-      <span
-        >by mailkaze
-        <a href="https://github.com/mailkaze" target="_blank"
-          ><i class="fab fa-github"></i></a
-      ></span>
+      <span id="sources" onclick="toggleSources()"></span>
+      <span id="separator"> | </span>
+      <a href="https://github.com/mailkaze" target="_blank"
+          ><span
+        >by mailkaze<i class="fab fa-github"></i></span></a
+      >
     </footer>
 
     <script

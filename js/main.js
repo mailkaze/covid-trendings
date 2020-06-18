@@ -22,7 +22,8 @@ const es = {
             índice mundial, puede significar que este país está enfrentando la
             epidemia de un modo más eficaz que la mayoria de los países. De lo
             contrario se mostrará en <span class="red">ROJO</span>.`,
-    infoClose: "Cerrar"
+    infoClose: "Cerrar",
+    sources: "Fuentes"
 }
 
 const en = {
@@ -42,7 +43,8 @@ const en = {
     infoP2: `It is displayed in <span class="green">GREEN</span> if fewer people have been infected today than the average of the previous week and may indicate that the situation is improving, otherwise it will be displayed in <span class="red">RED</span>.`,
     infoGlobalCasesPerMillion: "World infections per million inhabitants (today)",
     infoP3: `It will be displayed in <span class="green">GREEN</span> when the rate of infections per million inhabitants of the requested country is less than the global rate, it may mean that this country is facing the epidemic in a more effective way than most countries. Otherwise it will be displayed in <span class="red">RED</span>.`,
-    infoClose: "Close"
+    infoClose: "Close",
+    sources: "Sources"
 }
 
 let lang = ''
@@ -53,6 +55,8 @@ const cardsContainer = document.getElementsByClassName('cards-container')[0]
 
 // llena los campos de la tarjeta 'global'
 const renderGlobal = () => {
+    document.getElementById('sources').textContent = lang.sources
+
     global.casesPerMillion = (global.newConfirmed / global.population *1000000).toFixed(2)
     document.getElementById('globalTitle').textContent = lang.globalTitle
     document.getElementById('globalNewCasesP').innerHTML = lang.globalNewCases
@@ -71,7 +75,7 @@ const renderGlobal = () => {
     document.getElementById('infoGlobalCasesPerMillion').innerHTML = lang.infoGlobalCasesPerMillion
     document.getElementById('infoP3').innerHTML = lang.infoP3
     document.getElementById('infoClose').innerHTML = lang.infoClose
-
+    document.getElementById('sourcesTitle').textContent = lang.sources
 }
 
 // Primera function en ejecutarse, construye la lista de paises para la búsqueda
@@ -227,6 +231,13 @@ const toggleInfo = () => {
     info.classList.contains('hidden')
     ? info.classList.remove('hidden')
     : info.classList.add('hidden')
+}
+
+const toggleSources = () => {
+    const sources =  document.getElementsByClassName('sources')[0]
+    sources.classList.contains('hidden')
+    ? sources.classList.remove('hidden')
+    : sources.classList.add('hidden')
 }
 
 // EVENTOS:

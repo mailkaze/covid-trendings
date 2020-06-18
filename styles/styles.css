@@ -59,6 +59,7 @@ header span {
     position: absolute;
     top: 21px;
     right: 9px;
+    cursor: pointer;
 }
 
 .cards-container {
@@ -210,29 +211,41 @@ header span {
 
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 40px;
     background: #073b4c;
     color: #fdfffc;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
+footer a {
+    color: #fdfffc;
+    text-decoration: none;
+}
+
 footer span {
-    font-size: 0.8em;
+    font-size: 0.7em;
+}
+
+footer #sources {
+    cursor: pointer;
+}
+
+footer #separator {
+    margin: 0 8px;
 }
 
 footer i {
-    color: #fdfffc;
     font-size: 1.2em;
+    margin: 0 4px;
 }
 
 .info {
     z-index: 100;
-    /* min-height: 90vh; */
     max-width: 400px;
     background: #fdfffc;
     border-radius: 12px;
@@ -297,3 +310,38 @@ footer i {
      font-size: .9em;
      cursor: pointer;
  }
+
+ .sources {
+    z-index: 100;
+    width: 200px;
+    background: #fdfffc;
+    border-radius: 12px;
+    position: absolute;
+    left: 22vw;
+    bottom: 30px;
+    margin: 2.5vh 3vw;
+    padding: 15px;
+    font-size: .7em;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, .2);
+}
+
+.sources .fa-times {
+    float: right;
+    cursor: pointer;
+    font-size: 1.3em;
+}
+
+.sources h3 {
+    font-size: 1.4em;
+    margin: 5px 0;
+}
+
+.sources a {
+    color: #073b4c;
+
+}
+
+.sources p {
+    margin: 0;
+    text-align: justify;
+}
