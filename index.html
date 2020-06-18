@@ -44,20 +44,27 @@
       </div>
       <div class="cards-container">
         <div class="global card">
-          <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/World_Flag.svg" alt=""> -->
-          <div class="text">
             <i class="fas fa-globe-africa"></i>
-            <h3>Situación mundial:</h3>
-            <p>Nuevos contagios (hoy): <span id="globalNewConfirmed"></span></p>
-            <p>Casos Totales: <span id="globalTotal"></span></p>
-            <p>
-              Contagios por millón de habitantes:
-              <span id="globalCasesPerMillion"></span>
-            </p>
-          </div>
+            <h3 id="globalTitle"></h3>
+            <p id="globalNewCasesP"></p>
+            <p id="globalTotalCasesP"></p>
+            <p id="globalCasesPerMillionP"></p>
         </div>
       </div>
     </div>
+
+    <div class="info hidden">
+      <i class="fas fa-times" onclick="toggleInfo()"></i>
+      <h3 id="infoTitle"></h3>
+      <h4 id="infoCasesPerMillion"></h4>
+      <p id="infoP1"></p>
+      <p class="little-margin" id="infoP2"></p>
+      <h4 id="infoGlobalCasesPerMillion"></h4>
+      <p id="infoP3"></p>
+      <button onclick="toggleInfo()" id="infoClose"></button>
+    </div>
+
+    
     <footer>
       <span
         >by mailkaze
@@ -65,31 +72,6 @@
           ><i class="fab fa-github"></i></a
       ></span>
     </footer>
-
-    <div class="info hidden">
-      <i class="fas fa-times" onclick="toggleInfo()"></i>
-      <h3><i class="fas fa-info-circle"></i>¿Qué significan estos números?</h3>
-      <h4>Contagios por millón de habitantes (hoy)</h4>
-      <p>
-        Proporciona una idea más ajustada de la gravedad de la epidemia, sin
-        importar la cantidad de habitantes.
-      </p>
-      <p class="little-margin">
-        Se muestra en <span class="green">VERDE</span> si hoy se han contagiado
-        menos personas que la media de la semana anterior y puede indicar que la
-        situación está mejorando, de lo contrario se mostrará en
-        <span class="red">ROJO</span>.
-      </p>
-      <h4>Contagios mundiales por millón de habitantes (hoy)</h4>
-      <p>
-        Se mostrará en <span class="green">VERDE</span> cuando el índice de
-        contagios por millón de habitantes del país consultado es menor que el
-        índice mundial, puede significar que este país está enfrentando la
-        epidemia de un modo más eficaz que la mayoria de los países. De lo
-        contrario se mostrará en <span class="red">ROJO</span>.
-      </p>
-      <button onclick="toggleInfo()">Cerrar</button>
-    </div>
 
     <script
       src="https://kit.fontawesome.com/a20e852377.js"

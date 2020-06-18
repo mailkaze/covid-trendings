@@ -105,6 +105,10 @@ header span {
     object-fit: cover;
 }
 
+.global {
+    padding: 10px;
+}
+
 .country-select {
     display: flex;
     align-items: center;

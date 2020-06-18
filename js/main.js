@@ -1,14 +1,14 @@
 const es = {
     searchPlaceHolder: "Busca tu país ...",
-    globalTitle: "Situación mundial:",
-    globalNewCases: "Nuevos contagios (hoy):",
-    globalTotalCases: "Casos Totales:",
-    globalCasesPerMillion: "Contagios por millón de habitantes:",
-    newCases: "Nuevos Contagios:",
-    totalCases: "Casos totales:",
-    population: "Población",
-    casesPerMillion: "Contagios por millón de habitantes (hoy):",
-    comparativeGlobalCasesPerMillion: "Contagios mundiales por millón de habitantes (hoy):",
+    globalTitle: "Situación mundial: ",
+    globalNewCases: "Nuevos contagios (hoy): ",
+    globalTotalCases: "Casos Totales: ",
+    globalCasesPerMillion: "Contagios por millón de habitantes: ",
+    newCases: "Nuevos Contagios: ",
+    totalCases: "Casos totales: ",
+    population: "Población: ",
+    casesPerMillion: "Contagios por millón de habitantes (hoy): ",
+    comparativeGlobalCasesPerMillion: "Contagios mundiales por millón de habitantes (hoy): ",
     infoTitle: "¿Qué significan estos números?",
     infoCasesPerMillion: "Contagios por millón de habitantes (hoy)",
     infoP1: "Proporciona una idea más ajustada de la gravedad de la epidemia, sin importar la cantidad de habitantes.",
@@ -27,31 +27,25 @@ const es = {
 
 const en = {
     searchPlaceHolder: "Search your country ...",
-    globalTitle: "World situation:",
-    globalNewCases: "New infections (today):",
-    globalTotalCases: "Total cases:",
-    globalCasesPerMillion: "Infections per million inhabitants:",
-    newCases: "New infections:",
-    totalCases: "Total cases:",
-    population: "Population:",
-    casesPerMillion: "Infections per million inhabitants (today):",
+    globalTitle: "World situation: ",
+    globalNewCases: "New infections (today): <span id='globalNewConfirmed'></span>",
+    globalTotalCases: "Total cases: <span id='globalTotal'></span>",
+    globalCasesPerMillion: "Infections per million inhabitants: <span id='globalCasesPerMillion'></span>",
+    newCases: "New infections: ",
+    totalCases: "Total cases: ",
+    population: "Population: ",
+    casesPerMillion: "Infections per million inhabitants (today): ",
     comparativeGlobalCasesPerMillion: "World infections per million inhabitants (today):",
-    infoTitle: "What do these numbers mean?",
+    infoTitle: "<i class='fas fa-info-circle' ></i> What do these numbers mean?",
     infoCasesPerMillion: "Infections per million inhabitants (today)",
-    infoP1: "It provides a better idea of the severity of the epidemic, regardless of the number of inhabitants.",
+    infoP1: "It provides a better idea of the severity of the epidemic, regardless of the country's population.",
     infoP2: `It is displayed in <span class="green">GREEN</span> if fewer people have been infected today than the average of the previous week and may indicate that the situation is improving, otherwise it will be displayed in <span class="red">RED</span>.`,
     infoGlobalCasesPerMillion: "World infections per million inhabitants (today)",
     infoP3: `It will be displayed in <span class="green">GREEN</span> when the rate of infections per million inhabitants of the requested country is less than the global rate, it may mean that this country is facing the epidemic in a more effective way than most countries. Otherwise it will be displayed in <span class="red">RED</span>.`,
     infoClose: "Close"
 }
 
-console.log(navigator.language)
-if (navigator.language.startsWith('es')) {
-    alert('Español')
-} else {
-    alert('English')
-}
-
+let lang = ''
 let countries = []
 let global = { newConfirmed: 0, totalConfirmed: 0, casesPerMillion: 0, population: 7794798729 }
 const countrySearch = document.getElementById('country-search')
@@ -60,9 +54,24 @@ const cardsContainer = document.getElementsByClassName('cards-container')[0]
 // llena los campos de la tarjeta 'global'
 const renderGlobal = () => {
     global.casesPerMillion = (global.newConfirmed / global.population *1000000).toFixed(2)
+    document.getElementById('globalTitle').textContent = lang.globalTitle
+    document.getElementById('globalNewCasesP').innerHTML = lang.globalNewCases
+    document.getElementById('globalTotalCasesP').innerHTML = lang.globalTotalCases
+    document.getElementById('globalCasesPerMillionP').innerHTML = lang.globalCasesPerMillion
     document.getElementById('globalNewConfirmed').textContent = Intl.NumberFormat().format(global.newConfirmed)
     document.getElementById('globalTotal').textContent = Intl.NumberFormat().format(global.totalConfirmed)
     document.getElementById('globalCasesPerMillion').textContent = Intl.NumberFormat().format(global.casesPerMillion)
+
+
+    // aprobechamos la carga de global para cargar los textos de info:
+    document.getElementById('infoTitle').innerHTML = lang.infoTitle
+    document.getElementById('infoCasesPerMillion').innerHTML = lang.infoCasesPerMillion
+    document.getElementById('infoP1').innerHTML = lang.infoP1
+    document.getElementById('infoP2').innerHTML = lang.infoP2
+    document.getElementById('infoGlobalCasesPerMillion').innerHTML = lang.infoGlobalCasesPerMillion
+    document.getElementById('infoP3').innerHTML = lang.infoP3
+    document.getElementById('infoClose').innerHTML = lang.infoClose
+
 }
 
 // Primera function en ejecutarse, construye la lista de paises para la búsqueda
@@ -142,20 +151,20 @@ const renderCountryData = countryData => {
             <img src=${countryData.flag} />
             <div class="top-text">
             <h3>${countryData.name}</h3>
-            <p>Nuevos contagios: <span>${Intl.NumberFormat().format(countryData.casesToday)}</span></p>
-            <p>Casos totales: <span>${Intl.NumberFormat().format(countryData.totalCases)}</span></p>
-            <p>Población: <span>${Intl.NumberFormat().format(countryData.population)}</span></p>
+            <p>${lang.newCases}<span>${Intl.NumberFormat().format(countryData.casesToday)}</span></p>
+            <p>${lang.totalCases}<span>${Intl.NumberFormat().format(countryData.totalCases)}</span></p>
+            <p>${lang.population}<span>${Intl.NumberFormat().format(countryData.population)}</span></p>
             </div>
         </div>
         <div class="text" >
-            <p>Contagios por millón de habitantes (hoy):</p>
+            <p>${lang.casesPerMillion}</p>
             <p class="more-margin-p">
                 <i class="fas fa-caret-up ${countryData.showArrowUp}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown}"></i>
                 <span class=${countryData.trending}>${Intl.NumberFormat().format(countryData.newCasesPerMillion.toFixed(2))}</span>
                 <i class="far fa-question-circle" onclick="toggleInfo()"></i>
             </p>
-            <p>Contagios mundiales por millón de habitantes (hoy):</p>
+            <p>${lang.comparativeGlobalCasesPerMillion}</p>
             <p> 
                 <i class="fas fa-caret-up ${countryData.showArrowUp2}"></i>
                 <i class="fas fa-caret-down ${countryData.showArrowDown2}"></i>
@@ -230,11 +239,13 @@ countrySearch.addEventListener('keyup', e => {
 
 document.getElementsByClassName('fa-search')[0].addEventListener('click', () => {
     cardsContainer.innerHTML = ''
-    const country = e.target.value.toLowerCase().trim().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()); // cada palabra pasa a empezar por mayuscula
+    const country = countrySearch.value.toLowerCase().trim().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()); // cada palabra pasa a empezar por mayuscula
     searchCountry(country)
     countrySearch.value = ''
 })
 
 document.addEventListener("DOMContentLoaded", () => {
+    navigator.language.startsWith('es') ? lang = es : lang = en // select language based on the clients browser
+    countrySearch.placeholder = lang.searchPlaceHolder
     loadCountries()
 })
