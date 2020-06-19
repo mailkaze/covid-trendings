@@ -233,6 +233,7 @@ footer span {
 
 footer #sources {
     cursor: pointer;
+    padding-top: 2px;
 }
 
 footer #separator {
@@ -299,17 +300,17 @@ footer i {
     font-weight: 700;
 }
 
- .info button {
-     margin-top: 20px;
-     border-style: none;
-     float: right;
-     background: #073b4c;
-     color: #fdfffc;
-     padding: 10px 24px;
-     border-radius: 8px;
-     font-size: .9em;
-     cursor: pointer;
- }
+.info button {
+    margin-top: 20px;
+    border-style: none;
+    float: right;
+    background: #073b4c;
+    color: #fdfffc;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: .9em;
+    cursor: pointer;
+}
 
  .sources {
     z-index: 100;
