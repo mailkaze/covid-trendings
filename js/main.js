@@ -9,7 +9,7 @@ const es = {
     population: "Población: ",
     casesPerMillion: "Contagios por millón de habitantes (hoy): ",
     comparativeGlobalCasesPerMillion: "Contagios mundiales por millón de habitantes (hoy): ",
-    infoTitle: "¿Qué significan estos números?",
+    infoTitle: "<i class='fas fa-info-circle' ></i> ¿Qué significan estos números?",
     infoCasesPerMillion: "Contagios por millón de habitantes (hoy)",
     infoP1: "Proporciona una idea más ajustada de la gravedad de la epidemia, sin importar la cantidad de habitantes.",
     infoP2: `Se muestra en <span class="green">VERDE</span> si hoy se han contagiado
